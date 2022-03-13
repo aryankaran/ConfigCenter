@@ -812,15 +812,15 @@
                 android:data="https://t.me/ShihabZzz" />
         </Preference>
 
-        <!--<Preference
+        <Preference
             android:id="@+id/device_rolex"
             android:icon="@drawable/havoc_device"
             android:summary="@string/device_rolex_summary"
             android:title="@string/device_rolex" >
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://t.me/XtremeQ" />
-        </Preference>-->
+                android:data="https://t.me/aryan_karan" />
+        </Preference>
 
         <Preference
             android:id="@+id/device_santoni"
@@ -879,7 +879,7 @@
             android:title="@string/device_onclite" >
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://t.me/aryan_karan_2004" />
+                android:data="https://t.me/aryan_karan" />
         </Preference>
 
         <Preference
