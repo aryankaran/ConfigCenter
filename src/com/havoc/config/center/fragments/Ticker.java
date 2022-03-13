@@ -26,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 
 import com.android.internal.logging.nano.MetricsProto;
 
@@ -33,12 +34,14 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
 import com.havoc.support.preferences.SystemSettingListPreference;
+import com.havoc.support.preferences.SystemSettingSeekBarPreference;
 
-public class StatusbarLogo extends SettingsPreferenceFragment implements
+public class Ticker extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, CompoundButton.OnCheckedChangeListener {
 
-    private SystemSettingListPreference mLogoStyle;
-    private SystemSettingListPreference mLogoPosition;
+    private SystemSettingListPreference mMode;
+    private SystemSettingListPreference mAnimation;
+    private SystemSettingSeekBarPreference mDuration;
 
     private TextView mTextView;
     private View mSwitchBar;
@@ -46,10 +49,11 @@ public class StatusbarLogo extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        addPreferencesFromResource(R.xml.statusbar_logo);
+        addPreferencesFromResource(R.xml.statusbar_ticker);
 
-        mLogoStyle = (SystemSettingListPreference) findPreference("status_bar_logo_style");
-        mLogoPosition = (SystemSettingListPreference) findPreference("status_bar_logo_position");
+        mMode = (SystemSettingListPreference) findPreference("status_bar_ticker_mode");
+        mAnimation = (SystemSettingListPreference) findPreference("status_bar_ticker_animation_mode");
+        mDuration = (SystemSettingSeekBarPreference) findPreference("status_bar_ticker_tick_duration");
     }
 
     @Override
@@ -65,7 +69,7 @@ public class StatusbarLogo extends SettingsPreferenceFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         boolean enabled = Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_LOGO, 0) == 1;
+                Settings.System.STATUS_BAR_SHOW_TICKER, 0) == 1;
 
         mTextView = view.findViewById(R.id.switch_text);
         mTextView.setText(getString(enabled ?
@@ -81,19 +85,21 @@ public class StatusbarLogo extends SettingsPreferenceFragment implements
             mSwitchBar.setActivated(switchWidget.isChecked());
         });
 
-        mLogoStyle.setEnabled(enabled);
-        mLogoPosition.setEnabled(enabled);
+        mMode.setEnabled(enabled);
+        mAnimation.setEnabled(enabled);
+        mDuration.setEnabled(enabled);
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         Settings.System.putInt(getContentResolver(),
-                Settings.System.STATUS_BAR_LOGO, isChecked ? 1 : 0);
+                Settings.System.STATUS_BAR_SHOW_TICKER, isChecked ? 1 : 0);
         mTextView.setText(getString(isChecked ? R.string.switch_on_text : R.string.switch_off_text));
         mSwitchBar.setActivated(isChecked);
 
-        mLogoStyle.setEnabled(isChecked);
-        mLogoPosition.setEnabled(isChecked);
+        mMode.setEnabled(isChecked);
+        mAnimation.setEnabled(isChecked);
+        mDuration.setEnabled(isChecked);
     }
 
     @Override
